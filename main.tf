@@ -1,28 +1,19 @@
 provider "google" {
-  project     = "gce03021991"
-  region      = "us-central1"
-  credentials = file("C:\\GCPCICD\\GCP_GCE\\credentials.json")
+  project     = var.project_id
+  region      = var.region
+  credentials = file("C:\\GCPCICD\\GCP_GCE_Jenkins\\credentials.json")
 }
 
-resource "google_compute_instance" "vm_instance" {
-  name         = "terraform-gce-instance"
-  machine_type = "e2-medium"
-  zone         = "us-central1-a"
+module "compute_instance" {
+  source        = "./modules/compute_instance"
+  instance_name = var.instance_name
+  machine_type  = var.machine_type
+  zone          = var.zone
+  image         = var.image
+  region        = var.region
+  project_id    = var.project_id
 
-  boot_disk {
-    initialize_params {
-      image = "debian-cloud/debian-11"
-    }
-  }
-
-  network_interface {
-    network = "default"
-    access_config {
-      // Assigns a public IP
-    }
-  }
-}
-
-output "instance_ip" {
-  value = google_compute_instance.vm_instance.network_interface[0].access_config[0].nat_ip
+  # Pass existing network details to the Compute Engine module
+  network    = "custom-vpc"
+  subnetwork = "custom-subnet"
 }

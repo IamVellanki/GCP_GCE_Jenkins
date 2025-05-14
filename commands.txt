@@ -1,0 +1,3 @@
+gsutil mb -p gce03021991 -c STANDARD -l us-central1 gs://gcp_terraform-state-backend / to create a bucket
+gsutil versioning set on gs://gcp_terraform-state-backend / to enable versioning
+

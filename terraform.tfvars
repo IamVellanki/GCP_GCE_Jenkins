@@ -1,0 +1,6 @@
+project_id    = "gce03021991"
+region        = "us-central1"
+zone          = "us-central1-a"
+machine_type  = "e2-medium"
+image         = "oracle-linux-cloud/oracle-linux-8-v20250322"
+instance_name = "terraform-gce-jenkins"
